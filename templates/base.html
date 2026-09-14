@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Camera Calibration & Measurement{% endblock %}</title>
+  <style>
+    :root {
+      --accent: #2e6f9e;
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --border: #dfe3e8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      margin: 0;
+      color: #22262b;
+    }
+    nav {
+      background: #1c2b36;
+      padding: 14px 24px;
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+    nav a {
+      color: #dce6ec;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    nav a:hover { color: #fff; text-decoration: underline; }
+    nav .brand { color: #fff; font-weight: 600; margin-right: 12px; }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px 60px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 22px;
+    }
+    h1 { font-size: 26px; margin-top: 0; }
+    h2 { font-size: 19px; color: #1c2b36; }
+    label { display: block; margin: 12px 0 4px; font-weight: 600; font-size: 14px; }
+    input[type=number], input[type=text], input[type=file] {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      width: 100%;
+      max-width: 320px;
+    }
+    button {
+      margin-top: 18px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #24567a; }
+    table.result-table { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: 14px; }
+    table.result-table th, table.result-table td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      text-align: right;
+    }
+    table.result-table th:first-child, table.result-table td:first-child { text-align: left; }
+    .flash { background: #fdecea; border: 1px solid #f5b5ac; color: #92352a; padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 14px; }
+    .stat-box { background: #f0f4f7; border-radius: 8px; padding: 12px 14px; }
+    .stat-box .label { font-size: 12px; color: #5b6672; }
+    .stat-box .value { font-size: 20px; font-weight: 700; color: var(--accent); }
+    code { background: #eef1f4; padding: 2px 6px; border-radius: 4px; }
+    .muted { color: #6b7280; font-size: 13px; }
+    #clickCanvas { border: 1px solid var(--border); max-width: 100%; cursor: crosshair; }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="brand">CV Module 2</span>
+    <a href="{{ url_for('index') }}">Overview</a>
+    <a href="{{ url_for('calibrate_view') }}">1. Calibration</a>
+    <a href="{{ url_for('measure_view') }}">2. Measurement</a>
+    <a href="{{ url_for('validate_view') }}">3. Validation</a>
+  </nav>
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
