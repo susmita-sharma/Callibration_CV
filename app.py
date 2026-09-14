@@ -9,7 +9,7 @@ import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 import calibration
-import validate_measurements as vm
+import validate as vm
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_CALIB_DIR = os.path.join(BASE_DIR, "static", "calib_uploads")
@@ -133,7 +133,7 @@ def measure_view():
     camera_matrix = calib["camera_matrix"]
     dist_coeffs = calib["dist_coeffs"]
 
-    from measure_dimensions import undistort_points, pixel_length_to_real
+    from dimensions import undistort_points, pixel_length_to_real
     p1_u, p2_u = undistort_points([(x1, y1), (x2, y2)], camera_matrix, dist_coeffs)
     real_mm, dx_mm, dy_mm = pixel_length_to_real(p1_u, p2_u, distance_mm, camera_matrix)
     pixel_dist = float(np.hypot(x2 - x1, y2 - y1))
